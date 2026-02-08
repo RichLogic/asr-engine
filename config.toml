@@ -1,0 +1,12 @@
+# 语音识别服务配置文件
+
+[model]
+# 使用的 Whisper 模型
+# 可选值: tiny, base, small, medium, large
+# 默认: medium
+name = "medium"
+
+[server]
+# 服务器监听端口
+# 默认: 8000
+port = 8000
