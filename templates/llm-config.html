@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字模型配置 - 本地语音识别</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/llm-config.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="/" class="nav-back">← 返回主页</a>
+            <span class="nav-title">文字模型配置</span>
+            <span class="nav-spacer"></span>
+        </nav>
+
+        <header class="page-header">
+            <h1><span class="icon">🤖</span> 文字模型配置</h1>
+            <p class="subtitle">配置 AI 文字优化模型，提升语音识别结果质量</p>
+        </header>
+
+        <div class="config-layout">
+            <!-- 配置列表 -->
+            <div class="config-list-section">
+                <div class="section-header">
+                    <h2>配置列表</h2>
+                    <button class="btn btn-sm btn-primary" id="addConfigBtn">
+                        <span>+</span> 新增配置
+                    </button>
+                </div>
+                <div class="config-list" id="configList">
+                    <div class="loading-spinner">
+                        <span class="spinner"></span>
+                        <span>加载配置...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配置表单 -->
+            <div class="config-form-section" id="configFormSection" style="display: none;">
+                <div class="section-header">
+                    <h2 id="formTitle">新增配置</h2>
+                    <button class="btn-close" id="closeFormBtn">&times;</button>
+                </div>
+                <form class="config-form" id="configForm">
+                    <input type="hidden" id="configId" value="">
+
+                    <div class="form-group">
+                        <label for="configName">配置名称 <span class="required">*</span></label>
+                        <input type="text" id="configName" placeholder="例如：OpenAI GPT-4" required>
+                        <span class="form-hint">给这个配置起个名字，方便识别</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="baseUrl">Base URL <span class="required">*</span></label>
+                        <input type="url" id="baseUrl" placeholder="https://api.openai.com/v1" required>
+                        <span class="form-hint">API 的基础地址，支持 OpenAI 格式</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apiKey">API Key <span class="required">*</span></label>
+                        <div class="input-with-button">
+                            <input type="password" id="apiKey" placeholder="sk-..." required>
+                            <button type="button" class="btn-icon" id="toggleApiKey" title="显示/隐藏">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="form-hint">您的 API 密钥，将被加密存储</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modelName">模型名称 <span class="required">*</span></label>
+                        <input type="text" id="modelName" placeholder="gpt-4o" required>
+                        <span class="form-hint">例如：gpt-4o, gpt-3.5-turbo, claude-3-sonnet</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="isDefault">
+                            <span>设为默认配置</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="testConfigBtn">
+                            <span class="test-icon">🔌</span> 测试连接
+                        </button>
+                        <button type="submit" class="btn btn-primary">保存配置</button>
+                    </div>
+
+                    <div id="testResult"></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="errorArea"></div>
+    </div>
+
+    <script src="/static/llm-config.js"></script>
+</body>
+</html>

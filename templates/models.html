@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语音模型选择 - 本地语音识别</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/models.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="/" class="nav-back">← 返回主页</a>
+            <span class="nav-title">语音模型选择</span>
+            <span class="nav-spacer"></span>
+        </nav>
+
+        <header class="page-header">
+            <h1><span class="icon">🎯</span> 选择语音模型</h1>
+            <p class="subtitle">选择适合您设备的 Whisper 语音识别模型</p>
+        </header>
+
+        <div class="models-info">
+            <div class="info-card">
+                <span class="info-icon">💡</span>
+                <div class="info-content">
+                    <strong>模型说明</strong>
+                    <p>模型越大识别精度越高，但需要更多内存和计算资源。首次使用需要下载模型文件。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="models-list" id="modelsList">
+            <div class="loading-spinner centered">
+                <span class="spinner"></span>
+                <span>加载模型列表...</span>
+            </div>
+        </div>
+
+        <div id="errorArea"></div>
+    </div>
+
+    <script src="/static/models.js"></script>
+</body>
+</html>

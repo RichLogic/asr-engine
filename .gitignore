@@ -32,3 +32,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# User configs (contains sensitive info)
+llm_configs.json

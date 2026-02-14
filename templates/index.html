@@ -8,20 +8,106 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎤 本地语音识别</h1>
-        
+        <nav class="nav-bar">
+            <span class="nav-brand">🎤 ASR Engine</span>
+            <div class="nav-links">
+                <a href="/models" class="nav-link">
+                    <span>🎯</span>
+                    <span>语音模型</span>
+                </a>
+                <a href="/llm-config" class="nav-link">
+                    <span>🤖</span>
+                    <span>文字模型</span>
+                </a>
+            </div>
+        </nav>
+
+        <header>
+            <h1><span class="icon">🎤</span> 本地语音识别</h1>
+            <p class="subtitle">基于 Whisper 的离线语音识别服务</p>
+        </header>
+
+        <!-- 当前配置状态 -->
+        <div class="config-status-bar" id="configStatusBar">
+            <div class="status-item" id="asrModelStatus">
+                <span class="status-label">语音模型:</span>
+                <span class="status-value loading">加载中...</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-item" id="llmConfigStatus">
+                <span class="status-label">文字优化:</span>
+                <span class="status-value loading">加载中...</span>
+            </div>
+        </div>
+
+        <!-- 优化开关 -->
+        <div class="optimize-toggle" id="optimizeToggle" style="display: none;">
+            <label class="toggle-label">
+                <input type="checkbox" id="enableOptimize">
+                <span class="toggle-slider"></span>
+                <span class="toggle-text">自动优化识别结果</span>
+            </label>
+            <span class="optimize-hint">使用 AI 去除口癖、优化语义</span>
+        </div>
+
         <div class="recording-area" id="recordingArea">
-            <div class="recording-status" id="recordingStatus"></div>
+            <div class="result-box" id="resultBox">
+                <div class="result-placeholder" id="placeholder">点击下方按钮开始录音，识别结果将显示在这里</div>
+                <div class="recording-status editable" id="recordingStatus" contenteditable="true" style="display: none;"></div>
+            </div>
         </div>
-        
+
+        <!-- 优化结果展示区域 -->
+        <div class="optimize-result" id="optimizeResult" style="display: none;">
+            <div class="optimize-header">
+                <span class="optimize-title">✨ 优化结果</span>
+                <div class="optimize-actions">
+                    <button class="btn btn-sm btn-secondary" id="compareBtn">对比</button>
+                    <button class="btn btn-sm btn-primary" id="applyOptimizeBtn">应用</button>
+                </div>
+            </div>
+            <div class="optimize-content editable" id="optimizeContent" contenteditable="true"></div>
+        </div>
+
         <div class="button-group">
-            <button class="btn btn-record" id="recordBtn">🎤 开始录音</button>
-            <button class="btn btn-copy" id="copyBtn" disabled>📋 复制文字</button>
+            <button class="btn btn-record" id="recordBtn">
+                <span>🎙️</span>
+                <span>开始录音</span>
+            </button>
+            <button class="btn btn-copy" id="copyBtn" disabled>
+                <span>📋</span>
+                <span>复制文字</span>
+            </button>
+            <button class="btn btn-optimize" id="optimizeBtn" disabled style="display: none;">
+                <span>✨</span>
+                <span>优化文字</span>
+            </button>
         </div>
-        
+
         <div id="errorArea"></div>
     </div>
-    
+
+    <!-- 对比弹窗 -->
+    <div class="modal" id="compareModal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>对比查看</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="compare-section">
+                    <div class="compare-label">原始识别结果</div>
+                    <div class="compare-text original editable" id="originalText" contenteditable="true"></div>
+                </div>
+                <div class="compare-section">
+                    <div class="compare-label">优化后结果</div>
+                    <div class="compare-text optimized editable" id="optimizedText" contenteditable="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/app.js"></script>
 </body>
 </html>
