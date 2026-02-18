@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 加载配置列表
     async function loadConfigs() {
         try {
-            const response = await fetch('/api/llm-configs');
+            const response = await fetch(API_BASE + '/api/llm-configs');
             if (!response.ok) {
                 throw new Error('获取配置列表失败');
             }
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch(`/api/llm-configs/${id}`, {
+            const response = await fetch(API_BASE + `/api/llm-configs/${id}`, {
                 method: 'DELETE'
             });
 
@@ -207,8 +207,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // 使用带ID的测试接口，如果是编辑模式使用当前配置ID，否则用临时测试
             const testUrl = editingConfigId
-                ? `/api/llm-configs/${editingConfigId}/test`
-                : '/api/llm-configs/test';
+                ? API_BASE + `/api/llm-configs/${editingConfigId}/test`
+                : API_BASE + '/api/llm-configs/test';
 
             const response = await fetch(testUrl, {
                 method: 'POST',
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let response;
             if (editingConfigId) {
                 // 更新配置
-                response = await fetch(`/api/llm-configs/${editingConfigId}`, {
+                response = await fetch(API_BASE + `/api/llm-configs/${editingConfigId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 // 新增配置
-                response = await fetch('/api/llm-configs', {
+                response = await fetch(API_BASE + '/api/llm-configs', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

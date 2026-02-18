@@ -1,13 +1,14 @@
 """
-FastAPI 语音识别服务
+FastAPI 语音识别服务 (API Server)
 支持本地语音识别，无需联网
 使用 OpenAI Whisper 模型
+前后端分离架构 - 仅提供 REST API
 """
-from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Body, Form
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional
 import os
 import tempfile
 from pathlib import Path
@@ -57,14 +58,16 @@ def load_config():
 
     return model_name, port
 
-app = FastAPI(title="本地语音识别服务")
+app = FastAPI(title="本地语音识别服务 API")
 
-# 挂载静态文件目录
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# 模板目录
-from fastapi.templating import Jinja2Templates
-templates = Jinja2Templates(directory="templates")
+# CORS 配置 - 允许前端跨域访问
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 存储模型
 model = None
@@ -105,24 +108,6 @@ async def startup_event():
     except Exception as e:
         print(f"⚠ 警告: 模型初始化失败: {e}")
         print("应用将继续运行，但语音识别功能可能不可用")
-
-
-@app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    """返回前端页面"""
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.get("/models", response_class=HTMLResponse)
-async def models_page(request: Request):
-    """返回语音模型选择页面"""
-    return templates.TemplateResponse("models.html", {"request": request})
-
-
-@app.get("/llm-config", response_class=HTMLResponse)
-async def llm_config_page(request: Request):
-    """返回文字模型配置页面"""
-    return templates.TemplateResponse("llm-config.html", {"request": request})
 
 
 @app.post("/recognize")

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadConfigStatus() {
         try {
             // 加载语音模型状态 - 使用 /api/models 接口
-            const asrResponse = await fetch('/api/models');
+            const asrResponse = await fetch(API_BASE + '/api/models');
             const asrStatus = document.querySelector('#asrModelStatus .status-value');
             if (asrResponse.ok) {
                 const data = await asrResponse.json();
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // 加载文字模型状态 - 使用 /api/llm-status 接口
-            const llmResponse = await fetch('/api/llm-status');
+            const llmResponse = await fetch(API_BASE + '/api/llm-status');
             const llmStatus = document.querySelector('#llmConfigStatus .status-value');
             if (llmResponse.ok) {
                 const data = await llmResponse.json();
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showOptimizeLoading();
 
         try {
-            const response = await fetch('/api/optimize-text', {
+            const response = await fetch(API_BASE + '/api/optimize-text', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('optimize', 'true');
             }
 
-            const response = await fetch('/recognize', {
+            const response = await fetch(API_BASE + '/recognize', {
                 method: 'POST',
                 body: formData
             });

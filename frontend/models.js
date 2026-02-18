@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 加载模型列表
     async function loadModels() {
         try {
-            const response = await fetch('/api/models');
+            const response = await fetch(API_BASE + '/api/models');
             if (!response.ok) {
                 throw new Error('获取模型列表失败');
             }
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch(`/api/models/${modelId}/download`, {
+            const response = await fetch(API_BASE + `/api/models/${modelId}/download`, {
                 method: 'POST'
             });
 
@@ -210,11 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // 先卸载当前模型
             if (currentModelId) {
-                await fetch('/api/models/unload', { method: 'POST' });
+                await fetch(API_BASE + '/api/models/unload', { method: 'POST' });
             }
 
             // 加载新模型
-            const response = await fetch(`/api/models/${modelId}/load`, {
+            const response = await fetch(API_BASE + `/api/models/${modelId}/load`, {
                 method: 'POST'
             });
 
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         pollingIntervals[modelId] = setInterval(async () => {
             try {
-                const response = await fetch(`/api/models/${modelId}/status`);
+                const response = await fetch(API_BASE + `/api/models/${modelId}/status`);
                 if (!response.ok) return;
 
                 const data = await response.json();
